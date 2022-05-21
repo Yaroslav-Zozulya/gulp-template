@@ -11,7 +11,7 @@ const sass = gulpSass(dartSass);
 export const scss = () => {
   return (
     app.gulp
-      .src(app.path.src.scss, { sourcemaps: true })
+      .src(app.path.src.scss, { sourcemaps: app.isDev })
       .pipe(
         app.plugins.plumber(
           app.plugins.notify.onError({
@@ -22,23 +22,29 @@ export const scss = () => {
       )
       .pipe(app.plugins.replace(/@img\//g, '../img/'))
       .pipe(sass({ outputStyle: 'expanded' }))
-      .pipe(groupCssMediaQueries())
+      .pipe(app.plugins.if(app.isBuild, groupCssMediaQueries()))
       .pipe(
-        webpCss({
-          webpClass: '.webp',
-          noWebpClass: '.no-webp',
-        }),
+        app.plugins.if(
+          app.isBuild,
+          webpCss({
+            webpClass: '.webp',
+            noWebpClass: '.no-webp',
+          }),
+        ),
       )
       .pipe(
-        autoprefixer({
-          grid: true,
-          overrideBrowserslist: ['last 3 versions'],
-          cascade: true,
-        }),
+        app.plugins.if(
+          app.isBuild,
+          autoprefixer({
+            grid: true,
+            overrideBrowserslist: ['last 3 versions'],
+            cascade: true,
+          }),
+        ),
       )
       // Раскомментировать если нужны не сжатые файлы css
-      .pipe(app.gulp.dest(app.path.build.css))
-      .pipe(cleanCss())
+      // .pipe(app.gulp.dest(app.path.build.css))
+      .pipe(app.plugins.if(app.isBuild, cleanCss()))
       .pipe(rename({ extname: '.min.css' }))
       .pipe(app.gulp.dest(app.path.build.css))
       .pipe(app.plugins.browserSync.stream())
