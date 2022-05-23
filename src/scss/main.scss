@@ -1,11 +1,17 @@
-// Components
+// FONTS
+@import './fonts';
+
+// UTILS
+@import './utils/some-util';
+
+// BASE
+@import './base/reset';
+
+// COMPONENTS
 @import './components/header';
 @import './components/footer';
 @import './components/main-content';
 @import './components/wrapper';
 
-// Base
-@import './base/reset';
-
-// Fonts
-@import './fonts';
+// LAYOUTS
+@import './layouts/some-layout';
