@@ -1,5 +1,6 @@
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
+import sourceMaps from 'gulp-sourcemaps';
 import rename from 'gulp-rename';
 import cleanCss from 'gulp-clean-css';
 import webpCss from 'gulp-webpcss';
@@ -12,6 +13,7 @@ export const scss = () => {
   return (
     app.gulp
       .src(app.path.src.scss, { sourcemaps: app.isDev })
+      .pipe(app.plugins.if(app.isDev, sourceMaps.init()))
       .pipe(
         app.plugins.plumber(
           app.plugins.notify.onError({
@@ -45,7 +47,8 @@ export const scss = () => {
       // Раскомментировать если нужны не сжатые файлы css
       // .pipe(app.gulp.dest(app.path.build.css))
       .pipe(app.plugins.if(app.isBuild, cleanCss()))
-      .pipe(rename({ extname: '.min.css' }))
+      .pipe(rename({ basename: 'style', extname: '.min.css' }))
+      .pipe(app.plugins.if(app.isDev, sourceMaps.write()))
       .pipe(app.gulp.dest(app.path.build.css))
       .pipe(app.plugins.browserSync.stream())
   );

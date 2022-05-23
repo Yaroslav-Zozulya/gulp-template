@@ -2,17 +2,10 @@
 <html lang="en">
   @@include('html/head.html', { "title":"Главная" })
   <body>
-    @@include('html/header.html',{})
-    <main>
-      <p>hello world</p>
-      <span>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde qui hic nulla laudantium
-        corporis esse exercitationem doloremque recusandae amet dignissimos.
-      </span>
-      <img src="@img/logo.svg" alt="" />
-      <img src="@img/test.jpg" alt="" />
-    </main>
-    @@include('html/footer.html',{})
+    <div class="wrapper">
+      @@include('html/header.html',{}) @@include('html/main-content.html', {})
+      @@include('html/footer.html',{})
+    </div>
     <script src="js/app.min.js"></script>
   </body>
 </html>
