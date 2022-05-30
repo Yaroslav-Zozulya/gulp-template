@@ -46,3 +46,7 @@ npm run dev
 ```shell
 npm run build
 ```
+### Деплой на git
+При любых изминених ветки main(master), после пуша в mian или принятого пулреквеста проект автоматически будет собран и выгружен в ветку gh-pages.
+Что бы увидеть livePage проекта, нужно зайти Settings -> Pages -> настроить отображение живой страницы с ветки gh-pages.
+ ![GitHub actions settings](./src/files/pages.jpg)
